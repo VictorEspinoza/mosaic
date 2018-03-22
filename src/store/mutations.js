@@ -1,3 +1,3 @@
-/**
- * Created by victor on 22.03.2018.
- */
+export function IMAGES_FETCH(state, images) {
+  state.images = images.data;
+}

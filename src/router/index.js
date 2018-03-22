@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import images from '@/components/images'
+import transformationChamber from '@/components/transformation-chamber';
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  base: __dirname,
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'home',
+      component: images
+    },
+    {
+      path: '/image/:id',
+      name: 'detail',
+      component: transformationChamber
     }
   ]
 })
