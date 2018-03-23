@@ -5,7 +5,7 @@ import transformationChamber from '@/components/transformation-chamber';
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: __dirname,
   routes: [
@@ -20,4 +20,6 @@ export default new Router({
       component: transformationChamber
     }
   ]
-})
+});
+
+export default router;

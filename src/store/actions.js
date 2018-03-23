@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import router  from '../router/index';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
@@ -12,7 +13,7 @@ Vue.http.interceptors.push((request, next) => {
    next();
 });
 
-export async function loadImages({commit, dispatch}) {
+export async function loadImages({commit}) {
   try {
     const result = await Vue.http.get('https://api.imgur.com/3/account/me/images');
     commit(IMAGES_FETCH, result.data);
@@ -31,6 +32,7 @@ export async function uploadPicture({commit}, {image, title, name}) {
       name
     };
     const result = await Vue.http.post('https://api.imgur.com/3/image', imageData);
+    router.push({ path: '/' })
   } catch (e) {
     console.log(e, 'error when uploading image');
   }
