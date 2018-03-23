@@ -8,6 +8,9 @@
     </div>
 
     <h2>Transformed</h2>
+    <div id="svg_container">
+
+    </div>
 
   </div>
 </template>
@@ -29,6 +32,7 @@ export default {
     }
   },
   mounted() {
+    this.cleanSvgContainer();
     const canvas = this.$refs.canvas;
     const context = canvas.getContext('2d');
     const imageObj = new Image();
@@ -43,11 +47,16 @@ export default {
     imageObj.src = this.image.link;
   },
   methods: {
+    cleanSvgContainer() {
+      const container = document.getElementById('svg_container');
+      while (container.firstChild) container.removeChild(foo.firstChild);
+    },
     transform() {
       const canvas = this.$refs.canvas;
       const context = canvas.getContext('2d');
       const svg = transform(this.image.width, this.image.height, canvas, context);
-      document.body.appendChild(svg);
+      const container = document.getElementById('svg_container');
+      container.appendChild(svg);
     }
   },
   data() {
