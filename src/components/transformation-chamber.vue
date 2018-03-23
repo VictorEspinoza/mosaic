@@ -4,8 +4,18 @@
     <h2>Canvas</h2>
     <canvas ref="canvas" id="canvas" ></canvas>
     <div>
-      <button @click="transform" >mosaiconize</button>
-      <button @click="upload" >upload</button>
+      <button
+        v-if="is_transformable"
+        @click="transform" >
+        mosaiconize
+      </button>
+      <button
+        v-if="showUploadButton"
+        @click="upload" >upload
+      </button>
+      <router-link to="/">
+        Back
+      </router-link>
     </div>
 
     <h2>Transformed</h2>
@@ -19,12 +29,17 @@
 import { mapState } from 'vuex';
 import { transform } from '../utils/transformation-helper';
 
+const DESCRIPTION = 'transformed';
+
 export default {
   name: 'transformationChamber',
   computed: {
     ...mapState({
       images: state => state.images
     }),
+    is_transformable() {
+      return this.image.description !== DESCRIPTION;
+    },
     image() {
       const {id} = this.$route.params;
       const image = this.images.find((image) => image.id === id);
@@ -55,6 +70,7 @@ export default {
       const canvas = this.$refs.canvas;
       const context = canvas.getContext('2d');
       this.svg = transform(this.image.width, this.image.height, canvas, context);
+      this.showUploadButton = true;
       this.showTransformedPicture();
     },
     showTransformedPicture() {
@@ -81,7 +97,8 @@ export default {
       const imageData = {
         image: cropImageInfo(this.imageData),
         title: `${this.image.name}-mosaic`,
-        name: `${this.image.name}-mosaic`
+        name: `${this.image.name}-mosaic`,
+        description: DESCRIPTION
       };
 
       this.$store.dispatch('uploadPicture', imageData);
@@ -91,7 +108,8 @@ export default {
     return {
       imageObject: null,
       svg: null,
-      imageData: null
+      imageData: null,
+      showUploadButton: false
     }
   }
 }
