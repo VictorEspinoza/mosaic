@@ -19,6 +19,8 @@ export async function loadImages({commit}) {
     commit(IMAGES_FETCH, result.data);
   } catch(e) {
     console.log(e, 'error');
+    Vue.toasted.show('Error when loading your images, please try later', {type: 'error'});
+
   }
 }
 
@@ -32,8 +34,10 @@ export async function uploadPicture({commit}, {image, title, name}) {
       name
     };
     const result = await Vue.http.post('https://api.imgur.com/3/image', imageData);
+    Vue.toasted.show('Image is saved');
     router.push({ path: '/' })
   } catch (e) {
     console.log(e, 'error when uploading image');
+    Vue.toasted.show('Error when uploading your image', {type: 'error'});
   }
 }
