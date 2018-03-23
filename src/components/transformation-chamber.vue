@@ -14,7 +14,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { getUnitsPerDimension } from '../utils/transformation-helper';
+import { transform } from '../utils/transformation-helper';
 
 export default {
   name: 'transformationChamber',
@@ -43,53 +43,12 @@ export default {
     imageObj.src = this.image.link;
   },
   methods: {
-
     transform() {
-      const rows = getUnitsPerDimension(this.imageObject.height);
-      const cols = getUnitsPerDimension(this.imageObject.width);
-
-      const rgbToHex =(r, g, b) => {
-        if (r > 255 || g > 255 || b > 255)
-          throw "Invalid color component";
-        return ((r << 16) | (g << 8) | b).toString(16);
-      };
-
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      const svgNS = svg.namespaceURI;
-      svg.setAttribute('style', 'border: 1px solid black');
-      svg.setAttribute('width', this.imageObject.width);
-      svg.setAttribute('height', this.imageObject.height);
-
-      let yCoordinate = 0;
-      let xCoordinate = 0;
-
-
-      for (let i = 0; i <= cols; i++) {
-
-        for (let j = 0; j <= rows; j++) {
-          const canvas = this.$refs.canvas;
-          const context = canvas.getContext('2d');
-
-          const data = context.getImageData(yCoordinate, xCoordinate, 4, 4).data;
-          const hex = "#" + ("000000" + rgbToHex(data[0], data[1], data[2])).slice(-6);
-
-          const circle = document.createElementNS(svgNS, 'circle');
-          circle.setAttribute('cx', yCoordinate);
-          circle.setAttribute('cy', xCoordinate);
-          circle.setAttribute('r', 4);
-          circle.setAttribute('fill', hex);
-
-          svg.appendChild(circle);
-          xCoordinate += 4;
-        }
-
-        yCoordinate += 4;
-        xCoordinate = 0;
-      }
+      const canvas = this.$refs.canvas;
+      const context = canvas.getContext('2d');
+      const svg = transform(this.image.width, this.image.height, canvas, context);
       document.body.appendChild(svg);
     }
-
-
   },
   data() {
     return {
