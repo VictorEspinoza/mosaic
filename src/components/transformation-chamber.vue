@@ -55,6 +55,9 @@ export default {
       const {id} = this.$route.params;
       const image = this.images.find((image) => image.id === id);
       return image;
+    },
+    show_result() {
+      return this.svg !== null;
     }
   },
   mounted() {
@@ -75,7 +78,9 @@ export default {
   methods: {
     cleanSvgContainer() {
       const container = document.getElementById('transformed_container');
-      while (container.firstChild) container.removeChild(foo.firstChild);
+      if (container) {
+        while (container.firstChild) container.removeChild(container.firstChild);
+      }
     },
     transform() {
       const canvas = this.$refs.canvas;
