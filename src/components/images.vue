@@ -1,16 +1,19 @@
 <template>
   <div>
-    <h1>My album</h1>
-    <ul>
-      <li v-for="image in images">
-        <router-link :to="redirectUrl(image.id)">
+    <h1>My images</h1>
+    <div v-for="image in images">
+      <router-link
+        :to="redirectUrl(image.id)">
+        <figure class="figure">
           <img
             :src="image.link"
             :alt="image.name"
+            class="figure-img rounded"
           />
-        </router-link>
-      </li>
-    </ul>
+          <figcaption class="figure-caption text-right">{{image.name}}</figcaption>
+        </figure>
+      </router-link>
+    </div>
   </div>
 </template>
 

@@ -1,27 +1,38 @@
 <template>
   <div>
-    <h1>Transformation chamber</h1>
-    <h2>Canvas</h2>
-    <canvas ref="canvas" id="canvas" ></canvas>
-    <div>
+    <h2>Source</h2>
+    <div class="row">
+      <canvas ref="canvas" id="canvas" ></canvas>
+    </div>
+
+    <div class="row mt-2">
       <button
         v-if="is_transformable"
-        @click="transform" >
-        mosaiconize
+        @click="transform"
+        class="btn btn-primary">
+        Create mosaic
       </button>
-      <button
-        v-if="showUploadButton"
-        @click="upload" >upload
-      </button>
+    </div>
+
+    <div v-show="showResult">
+      <h2>Transformed</h2>
+      <div class="row">
+        <div id="transformed_container"></div>
+      </div>
+
+      <div class="row mt-2">
+        <button
+          class="btn btn-primary"
+          @click="upload" >upload
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-2">
       <router-link to="/">
-        Back
+        <button class="btn btn-secondar">Back</button>
       </router-link>
     </div>
-
-    <h2>Transformed</h2>
-    <div id="transformed_container">
-    </div>
-
   </div>
 </template>
 
@@ -70,7 +81,7 @@ export default {
       const canvas = this.$refs.canvas;
       const context = canvas.getContext('2d');
       this.svg = transform(this.image.width, this.image.height, canvas, context);
-      this.showUploadButton = true;
+      this.showResult = true;
       this.showTransformedPicture();
     },
     showTransformedPicture() {
@@ -109,7 +120,7 @@ export default {
       imageObject: null,
       svg: null,
       imageData: null,
-      showUploadButton: false
+      showResult: false
     }
   }
 }
