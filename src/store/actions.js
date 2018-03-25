@@ -5,9 +5,6 @@ Vue.use(VueResource);
 
 const IMAGES_FETCH = 'IMAGES_FETCH';
 
-
-const DESCRIPTION = 'transformed';
-
 Vue.http.interceptors.push((request, next) => {
   request.headers.set('Authorization', 'Bearer b90da0cddf3d83336be0939c5142a111198aab33');
    next();
@@ -24,13 +21,13 @@ export async function loadImages({commit}) {
   }
 }
 
-export async function uploadPicture({commit}, {image, title, name}) {
+export async function uploadPicture({commit}, {image, title, name, description}) {
   try {
     const imageData = {
       image,
       album: '',
       title,
-      description: DESCRIPTION,
+      description,
       name
     };
     const result = await Vue.http.post('https://api.imgur.com/3/image', imageData);
