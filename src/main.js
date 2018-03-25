@@ -3,9 +3,10 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store/store';
+import settings from './utils/toast-settings';
 
 Vue.config.productionTip = false;
-Vue.use(Toasted, {position: 'top-right', duration: 4000, type: 'info', theme: 'bubble', singleton: true});
+Vue.use(Toasted, settings);
 
 /* eslint-disable no-new */
 new Vue({

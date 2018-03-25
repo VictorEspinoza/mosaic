@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <div v-show="showResult">
+    <div v-show="show_result">
       <h2>Transformed</h2>
       <div class="row">
         <div id="transformed_container"></div>
@@ -86,7 +86,6 @@ export default {
       const canvas = this.$refs.canvas;
       const context = canvas.getContext('2d');
       this.svg = transform(this.image.width, this.image.height, canvas, context);
-      this.showResult = true;
       this.showTransformedPicture();
     },
     showTransformedPicture() {
@@ -124,8 +123,7 @@ export default {
     return {
       imageObject: null,
       svg: null,
-      imageData: null,
-      showResult: false
+      imageData: null
     }
   }
 }

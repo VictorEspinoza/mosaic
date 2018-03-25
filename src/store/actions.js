@@ -21,7 +21,7 @@ export async function loadImages({commit}) {
   }
 }
 
-export async function uploadPicture({commit, dispatch}, {image, title, name, description}) {
+export async function uploadPicture({dispatch}, {image, title, name, description}) {
   try {
     const imageData = {
       image,
@@ -30,7 +30,7 @@ export async function uploadPicture({commit, dispatch}, {image, title, name, des
       description,
       name
     };
-    const result = await Vue.http.post('https://api.imgur.com/3/image', imageData);
+    await Vue.http.post('https://api.imgur.com/3/image', imageData);
     Vue.toasted.show('Image is saved');
     await dispatch('loadImages');
     router.push({ path: '/' })
