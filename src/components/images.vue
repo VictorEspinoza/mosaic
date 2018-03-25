@@ -28,6 +28,11 @@ export default {
     })
   },
   methods: {
+    /**
+     *
+     * @param id {number}
+     * @returns {string}
+     */
     redirectUrl(id) {
       return `/image/${id}`;
     }
