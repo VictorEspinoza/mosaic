@@ -13,11 +13,6 @@
               <a class="nav-link" href="#">Home</a>
             </router-link>
           </li>
-          <li
-            v-if="show_image_detail_item"
-            class="nav-item">
-            <a class="nav-link" href="#">Image detail</a>
-          </li>
         </ul>
       </div>
     </nav>
@@ -30,9 +25,6 @@
 export default {
   name: 'App',
   computed: {
-    show_image_detail_item() {
-      return this.$route.name === 'detail';
-    }
   }
 }
 </script>
